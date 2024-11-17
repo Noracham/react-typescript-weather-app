@@ -23,17 +23,27 @@ function App() {
     conditionText: "",
     icon: ""
   });
-  const getWeather = (e:any) => {
-      e.preventDefault();
-      fetch("https://api.weatherapi.com/v1/current.json?key=929a4275ed0c4275982160943230704&q=London&aqi=no")
+  const getWeather = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetch(`https://api.weatherapi.com/v1/current.json?key=929a4275ed0c4275982160943230704&q=${city}&aqi=no`)
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        setResults({
+          country: data.location.country,
+          cityName: data.location.name,
+          temperature: data.current.temp_c,
+          conditionText: data.current.condition.text,
+          icon: data.current.condition.icon,
+        })
+      })
   }
   return (
-    <div className="App">
+    <div className="wrapper">
+      <div className="container">
       <Title />
       <Form setCity={setCity} getWeather={getWeather} />
-      <Results />
+      <Results results={results} />
+      </div>
     </div>
   );
 }
