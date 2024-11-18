@@ -42,7 +42,7 @@ function App() {
         setLoading(false);
       })
       .catch(err => {
-        alert("入力された都市名が見つかりません。");
+        alert("入力された都市名が見つかりませんでした。再度お試しください。");
         setLoading(false);
       }
   )}
